@@ -9,6 +9,8 @@ class GenerateQR extends StatefulWidget {
 }
 
 class _GenerateQRState extends State<GenerateQR> {
+  Key generatedQRKey = const Key('GeneratedQRKey');
+  Key generateTextKey = const Key('GenerateTextKey');
   late TextEditingController _inputController;
   String enteredText = "";
 
@@ -40,19 +42,25 @@ class _GenerateQRState extends State<GenerateQR> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 10,),
-                    QrImageView(data: enteredText, size: 200,),
+                    QrImageView(data: enteredText, key: generatedQRKey, size: 200,),
                     const SizedBox(height: 30,),
                   ],
                 ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 30,),
                 child: TextField(
+                  key: generateTextKey,
                   controller: _inputController,
                   decoration: const InputDecoration(
                     labelText: "Enter text",
                     hintText: "Enter text",
                   ),
                   onSubmitted: (String value) async {
+                    setState(() {
+                      enteredText = value;
+                    });
+                  },
+                  onChanged: (String value) async {
                     setState(() {
                       enteredText = value;
                     });

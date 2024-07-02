@@ -11,7 +11,8 @@ class ScanQR extends StatefulWidget {
 }
 
 class _ScanQRState extends State<ScanQR> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final Key qrKey = const Key('QR');
+  Key textKey = const Key('ScanTextKey');
   String qrData = 'Scanned data will be shown here!';
   QRViewController? controller;
 
@@ -38,7 +39,12 @@ class _ScanQRState extends State<ScanQR> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (qrData.isNotEmpty)
-              Text(qrData, style: const TextStyle(color: Colors.black,),textAlign: TextAlign.center,),
+              Text(
+                qrData,
+                key: textKey,
+                style: const TextStyle(color: Colors.black,),
+                textAlign: TextAlign.center,
+              ),
             Container(
               margin: const EdgeInsets.only(top: 20),
               color: Colors.lightBlue,

@@ -17,13 +17,20 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/scan': (context) => const ScanQR(),
+        '/generate': (context) => const GenerateQR(),
+      },
     );
   }
 }
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+  static const Key _scanButtonKey = Key("ScanButtonMain");
+  static const Key _generateButtonKey = Key("GenerateButtonMain");
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +42,21 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ScanQR()));
-            }, child: const Text('Scan QR',),),
+            ElevatedButton(
+              key: _scanButtonKey,
+              onPressed: (){
+                Navigator.of(context).pushNamed('/scan');
+              },
+              child: const Text('Scan QR',),
+            ),
             const SizedBox(height: 40,),
-            ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const GenerateQR()));
-            }, child: const Text('Generate QR',),),
+            ElevatedButton(
+              key: _generateButtonKey,
+              onPressed: (){
+                Navigator.of(context).pushNamed('/generate');
+              },
+              child: const Text('Generate QR',),
+            ),
           ],
         ),
       ),
